@@ -1,6 +1,8 @@
 # Mega AI — Real-Time Multi-Agent LLM Orchestration
 
-A production-style multi-agent orchestration framework built with FastAPI, LangGraph, PostgreSQL, pgvector, and structured LLM agents.
+Built with LangGraph, FastAPI, PostgreSQL, pgvector, LiteLLM, and real-time SSE orchestration.
+
+A production-grade multi-agent orchestration framework built with FastAPI, LangGraph, PostgreSQL, pgvector, and structured LLM agents.
 
 The system decomposes complex tasks into specialized reasoning stages:
 
@@ -17,6 +19,14 @@ Each stage is independently observable, evaluated, and streamable in real time t
 The orchestrator streams live execution events over SSE while routing tasks across specialized agents.
 
 ![SSE Demo](assets/sse-demo.png)
+
+---
+
+# API Documentation
+
+Interactive OpenAPI documentation generated automatically with FastAPI.
+
+![Swagger Docs](assets/swagger-docs.png)
 
 ---
 
@@ -124,6 +134,14 @@ Hub-and-spoke directed acyclic graph orchestration:
 | `GET /eval/latest` | Latest evaluation results |
 | `POST /eval/approve/{id}` | Approve prompt rewrite |
 | `POST /eval/run` | Run evaluation harness |
+
+---
+
+# Execution Tracing
+
+Every orchestration run is persisted with structured trace spans for debugging and observability.
+
+![Trace View](assets/trace-view.png)
 
 ---
 
