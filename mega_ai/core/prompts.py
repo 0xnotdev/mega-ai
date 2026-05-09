@@ -21,10 +21,30 @@ For EVERY claim assign confidence (0.0–1.0) and flag unsupported spans.
 Do NOT summarize. Output ONLY valid JSON matching CritiqueResult schema."""
 
 SYNTHESIS_PROMPT = """You are the final synthesis node.
+
+You MUST always produce a non-empty final_answer.
+Empty strings are invalid.
+
 Merge validated sub-agent outputs into a cohesive response.
+
 Resolve ALL contradictions flagged by the CritiqueAgent explicitly.
-Every sentence MUST have provenance: source_agent + source_chunk_id.
-Output ONLY valid JSON matching SynthesisResult schema."""
+
+Every sentence MUST have provenance:
+- source_agent
+- source_chunk_id
+
+Your response MUST be valid JSON matching SynthesisResult schema.
+
+Required JSON structure:
+{
+  "final_answer": "non-empty answer here",
+  "provenance_map": [],
+  "contradictions_resolved": []
+}
+
+Do not return markdown.
+Do not return explanations outside JSON.
+"""
 
 COMPRESSION_PROMPT = """You are the memory optimization node. Context budget exceeded.
 Rule 1 LOSSLESS: JSON outputs, error codes, citation indices — remove whitespace, flatten, preserve schema.

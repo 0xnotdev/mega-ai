@@ -12,6 +12,17 @@ from mega_ai.core.prompts import SYNTHESIS_PROMPT
 from mega_ai.core.config import settings
 
 
+ALLOWED_AGENTS = {
+    "MasterOrchestrator",
+    "DecompositionAgent",
+    "RetrievalAgent",
+    "CritiqueAgent",
+    "SynthesisAgent",
+    "CompressionAgent",
+    "MetaAgent",
+}
+
+
 async def run_synthesis(
     query: str,
     retrieval: RetrievalResult,
@@ -54,6 +65,7 @@ async def run_synthesis(
     )
 
     raw = response.choices[0].message.content
+
     data = json.loads(raw)
 
     raw_provenance = data.get(
@@ -65,32 +77,52 @@ async def run_synthesis(
 
     for p in raw_provenance:
 
-        if isinstance(p, dict):
-            provenance.append(
-                ProvenanceSentence(
-                    sentence=str(
-                        p.get("sentence", "")
-                    ),
-                    source_agent=str(
-                        p.get(
-                            "source_agent",
-                            "retrieval"
-                        )
-                    ),
-                    source_chunk_id=str(
-                        p.get(
-                            "source_chunk_id",
-                            "unknown"
-                        )
-                    ),
-                )
+        if not isinstance(p, dict):
+            continue
+
+        raw_agent = str(
+            p.get(
+                "source_agent",
+                "RetrievalAgent"
             )
+        )
+
+        source_agent = (
+            raw_agent
+            if raw_agent in ALLOWED_AGENTS
+            else "RetrievalAgent"
+        )
+
+        provenance.append(
+            ProvenanceSentence(
+                sentence=str(
+                    p.get(
+                        "sentence",
+                        ""
+                    )
+                ),
+                source_agent=source_agent,
+                source_chunk_id=str(
+                    p.get(
+                        "source_chunk_id",
+                        "unknown"
+                    )
+                ),
+            )
+        )
+
+    # -------------------------------
+    # Robust fallback chain
+    # -------------------------------
+
+    final_answer = (
+        data.get("final_answer")
+        or retrieval.answer
+        or "No synthesized answer generated."
+    )
 
     return SynthesisResult(
-        final_answer=data.get(
-            "final_answer",
-            ""
-        ),
+        final_answer=final_answer,
         provenance_map=provenance,
         contradictions_resolved=data.get(
             "contradictions_resolved",
