@@ -1,0 +1,23 @@
+## 2026 AI Agent Implementation Constraints
+
+### Stack (NEVER deviate)
+- FastAPI + PydanticAI + LangGraph ONLY
+- NEVER use LangChain standard agent wrappers (initialize_agent, create_react_agent)
+- Database: asyncpg with raw SQL. NO SQLAlchemy or any ORM.
+- Package manager: uv ONLY
+
+### Agent boundaries
+- Agents MUST NOT communicate directly with each other
+- MasterOrchestrator is the ONLY node that mutates routing_target in shared state
+- Every agent output MUST validate against a predefined Pydantic schema
+- Unstructured text output from an agent = failure
+
+### Tools
+- Tools MUST NEVER throw raw Python exceptions to the execution loop
+- Every tool wraps exceptions and returns ToolResult schema with error_message + can_retry bool
+- Max 2 retries per tool call, each logged separately
+
+### Code generation rules
+- Define Pydantic schema BEFORE writing any functional logic
+- Use raw asyncpg for all DB calls — no ORMs
+- git commit before any multi-file refactoring
