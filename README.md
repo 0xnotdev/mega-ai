@@ -230,6 +230,27 @@ All traces are persisted in PostgreSQL.
 
 ---
 
+# AI Assistance Disclosure
+
+AI-assisted development tools were used during the implementation of this project for:
+
+- architecture brainstorming
+- debugging support
+- documentation drafting
+- prompt engineering iteration
+- code refactoring suggestions
+
+All final engineering decisions, system integration, orchestration design, debugging, testing, and validation were performed manually.
+
+Primary AI tools used:
+
+- ChatGPT
+- Cursor AI
+- Groq Llama 3.1
+- Gemini 1.5 Flash
+
+---
+
 # Known Limitations
 
 - Retrieval currently uses mock chunks unless pgvector ingestion is added
