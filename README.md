@@ -12,6 +12,14 @@ Each stage is independently observable, evaluated, and streamable in real time t
 
 ---
 
+# Real-Time Multi-Agent Streaming
+
+The orchestrator streams live execution events over SSE while routing tasks across specialized agents.
+
+![SSE Demo](assets/sse-demo.png)
+
+---
+
 # Features
 
 - Real-time multi-agent orchestration using LangGraph
@@ -32,7 +40,7 @@ Each stage is independently observable, evaluated, and streamable in real time t
 ## 1. Clone repository
 
 ```bash
-git clone https://github.com/YOURUSERNAME/mega-ai
+git clone https://github.com/0xnotdev/mega-ai.git
 cd mega-ai
 ```
 
@@ -162,6 +170,7 @@ The evaluation system can:
 - support human approval workflows
 
 The system DOES NOT:
+
 - auto-modify Python code
 - auto-deploy prompt rewrites
 - guarantee improvements
