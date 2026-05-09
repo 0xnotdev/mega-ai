@@ -28,7 +28,7 @@ services:
 
     environment:
       DATABASE_URL: postgresql://megaai:megaai_secret@db:5432/megaai
-      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      groq_api_key: ${groq_api_key}
       E2B_API_KEY: ${E2B_API_KEY:-}
       LOG_LEVEL: ${LOG_LEVEL:-INFO}
 

@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    gemini_api_key: str
+    groq_api_key: str
     e2b_api_key: str = ""
 
     postgres_user: str = "megaai"
